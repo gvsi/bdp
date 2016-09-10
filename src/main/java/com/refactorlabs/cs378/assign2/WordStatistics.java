@@ -14,6 +14,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 
 /**
@@ -24,16 +25,10 @@ import java.util.StringTokenizer;
 public class WordStatistics {
 
 	/**
-	 * Each count output from the map() function is "1", so to minimize small
-	 * object creation we can use a constant for this output value/object.
-	 */
-	public final static LongWritable ONE = new LongWritable(1L);
-
-	/**
 	 * The Map class for word count.  Extends class Mapper, provided by Hadoop.
 	 * This class defines the map() function for the word count example.
 	 */
-	public static class MapClass extends Mapper<LongWritable, Text, Text, LongWritable> {
+	public static class MapClass extends Mapper<LongWritable, Text, Text, WordStatisticsWritable> {
 
 		/**
 		 * Counter group for the mapper.  Individual counters are grouped for the mapper.
@@ -41,53 +36,117 @@ public class WordStatistics {
 		private static final String MAPPER_COUNTER_GROUP = "Mapper Counts";
 
 		/**
-		 * Local variable "word" will contain the word identified in the input.
-		 * The Hadoop Text object is mutable, so we can reuse the same object and
-		 * simply reset its value as each word in the input is encountered.
+		 * Local variable "stats" will contain statistics for a specific word.
+		 * It is of type WordStatisticsWritable, where:
+		 * count -> Number of paragraphs containing the word (one)
+		 * mean -> Number of occurrences of the word in the paragraph
+		 * variance -> Number of occurrences of the word in the paragraph squared (needed for variance)
 		 */
-		private Text word = new Text();
+		private WordStatisticsWritable stats = new WordStatisticsWritable();
 
 		@Override
 		public void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
-			String line = value.toString();
+			String line = value.toString().toLowerCase()
+					.replaceAll("(\\[\\d+\\])", " $1 ") // Add a space before and after [number], so it's tokenized
+					.replaceAll("\\.|,|--|;|:|\\?|\"|'|=|_|!|\\(|\\)", " "); // Remove punctuation
+
 			StringTokenizer tokenizer = new StringTokenizer(line);
 
-			context.getCounter(MAPPER_COUNTER_GROUP, "Input Lines").increment(1L);
+			// A hashmap that keeps track of word frequencies in this paragraph
+			HashMap<String, Integer> freq = new HashMap<>();
 
 			// For each word in the input line, emit a count of 1 for that word.
 			while (tokenizer.hasMoreTokens()) {
-				word.set(tokenizer.nextToken());
-				context.write(word, ONE);
-				context.getCounter(MAPPER_COUNTER_GROUP, "Words Out").increment(1L);
+				String word = tokenizer.nextToken();
+
+				if (freq.containsKey(word)) {
+					freq.put(word, freq.get(word) + 1);
+				} else {
+					freq.put(word, 1);
+				}
+			}
+
+			for (String word : freq.keySet()) {
+
+				// count -> Number of paragraphs containing the word
+				// mean -> Number of occurrences of the word in the paragraph
+				// variance -> Number of occurrences of the word in the paragraph squared (needed for variance)
+
+				stats.setParagraphCount(1);
+				stats.setMean(freq.get(word));
+				stats.setVariance(Math.pow(freq.get(word), 2));
+
+				Text t = new Text();
+				t.set(word);
+				context.write(t, stats);
+
 			}
 		}
 	}
 
 	/**
-	 * The Reduce class for word count.  Extends class Reducer, provided by Hadoop.
-	 * This class defines the reduce() function for the word count example.
+	 * The Combine class for word statistics.  Extends class Reducer, provided by Hadoop.
+	 * This class combines the stats from each world by summing up each component
+	 * and then emitting the result as a single WordStatisticsWritable
 	 */
-	public static class ReduceClass extends Reducer<Text, LongWritable, Text, LongWritable> {
+	public static class CombineClass extends Reducer<Text, WordStatisticsWritable, Text, WordStatisticsWritable> {
 
 		/**
-		 * Counter group for the reducer.  Individual counters are grouped for the reducer.
+		 * Counter group for the combiner.  Individual counters are grouped for the reducer.
 		 */
-		private static final String REDUCER_COUNTER_GROUP = "Reducer Counts";
 
 		@Override
-		public void reduce(Text key, Iterable<LongWritable> values, Context context)
+		public void reduce(Text key, Iterable<WordStatisticsWritable> values, Context context)
 				throws IOException, InterruptedException {
-			long sum = 0L;
 
-			context.getCounter(REDUCER_COUNTER_GROUP, "Words Out").increment(1L);
+			WordStatisticsWritable stats = new WordStatisticsWritable();
+			long paragraph_sum = 0L;
+			double freq_sum = 0.0;
+			double freq_squared_sum = 0.0;
 
 			// Sum up the counts for the current word, specified in object "key".
-			for (LongWritable value : values) {
-				sum += value.get();
+			for (WordStatisticsWritable value : values) {
+				paragraph_sum += value.getParagraphCount();
+				freq_sum += value.getMean();
+				freq_squared_sum += value.getVariance();
 			}
+			stats.setParagraphCount(paragraph_sum);
+			stats.setMean(freq_sum);
+			stats.setVariance(freq_squared_sum);
+
 			// Emit the total count for the word.
-			context.write(key, new LongWritable(sum));
+			context.write(key, stats);
+		}
+	}
+
+	/**
+	 * The Reduce class for word count.  Extends class Reducer, provided by Hadoop.
+	 * This class sums up each component of a word's stats, and then computes mean and variance.
+	 */
+	public static class ReduceClass extends Reducer<Text, WordStatisticsWritable, Text, WordStatisticsWritable> {
+
+		@Override
+		public void reduce(Text key, Iterable<WordStatisticsWritable> values, Context context)
+				throws IOException, InterruptedException {
+			WordStatisticsWritable stats = new WordStatisticsWritable();
+			long paragraph_sum = 0L;
+			double freq_sum = 0.0;
+			double freq_squared_sum = 0.0;
+
+			// Sum up the counts for the current word, specified in object "key".
+			for (WordStatisticsWritable value : values) {
+				paragraph_sum += value.getParagraphCount();
+				freq_sum += value.getMean();
+				freq_squared_sum += value.getVariance();
+			}
+			double mean = freq_sum / paragraph_sum;
+			stats.setParagraphCount(paragraph_sum);
+			stats.setMean(mean);
+			stats.setVariance(freq_squared_sum / paragraph_sum - mean * mean);
+
+			// Emit the total count for the word.
+			context.write(key, stats);
 		}
 	}
 
@@ -106,12 +165,12 @@ public class WordStatistics {
 
 		// Set the output key and value types (for map and reduce).
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(LongWritable.class);
+		job.setOutputValueClass(WordStatisticsWritable.class);
 
 		// Set the map and reduce classes.
 		job.setMapperClass(MapClass.class);
 		job.setReducerClass(ReduceClass.class);
-		job.setCombinerClass(ReduceClass.class);
+		job.setCombinerClass(CombineClass.class);
 
 		// Set the input and output file formats.
 		job.setInputFormatClass(TextInputFormat.class);
