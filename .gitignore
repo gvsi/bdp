@@ -1,1 +1,7 @@
 .DS_Store
+*.class
+target/surefire-reports
+target/maven-status
+target/maven-archiver
+target/classes
+.idea
