@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="2" failures="0" name="com.refactorlabs.cs378.assign1.WordCountTest" time="0.634" errors="0" skipped="0">
+<testsuite tests="2" failures="0" name="com.refactorlabs.cs378.assign1.WordCountTest" time="0.48" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home/jre/lib"/>
@@ -7,7 +7,7 @@
     <property name="user.country.format" value="GB"/>
     <property name="gopherProxySet" value="false"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
-    <property name="maven.multiModuleProjectDirectory" value="/Users/gvsi/Developer/bdp/assign1"/>
+    <property name="maven.multiModuleProjectDirectory" value="/Users/gvsi/Developer/bdp/assign"/>
     <property name="java.vendor.url" value="http://java.oracle.com/"/>
     <property name="path.separator" value=":"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -17,7 +17,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.os.patch.level" value="unknown"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="/Users/gvsi/Developer/bdp/assign1"/>
+    <property name="user.dir" value="/Users/gvsi/Developer/bdp/assign"/>
     <property name="java.runtime.version" value="1.8.0_60-b27"/>
     <property name="java.awt.graphicsenv" value="sun.awt.CGraphicsEnvironment"/>
     <property name="java.endorsed.dirs" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_60.jdk/Contents/Home/jre/lib/endorsed"/>
@@ -63,6 +63,6 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase classname="com.refactorlabs.cs378.assign1.WordCountTest" name="testMapClass" time="0.595"/>
-  <testcase classname="com.refactorlabs.cs378.assign1.WordCountTest" name="testReduceClass" time="0.039"/>
+  <testcase classname="com.refactorlabs.cs378.assign1.WordCountTest" name="testMapClass" time="0.445"/>
+  <testcase classname="com.refactorlabs.cs378.assign1.WordCountTest" name="testReduceClass" time="0.035"/>
 </testsuite>
