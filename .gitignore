@@ -5,4 +5,4 @@ target/maven-status
 target/maven-archiver
 target/classes
 .idea
-.crc
+*.crc
