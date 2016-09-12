@@ -31,14 +31,9 @@ public class WordStatistics {
 	public static class MapClass extends Mapper<LongWritable, Text, Text, WordStatisticsWritable> {
 
 		/**
-		 * Counter group for the mapper.  Individual counters are grouped for the mapper.
-		 */
-		private static final String MAPPER_COUNTER_GROUP = "Mapper Counts";
-
-		/**
 		 * Local variable "stats" will contain statistics for a specific word.
 		 * It is of type WordStatisticsWritable, where:
-		 * count -> Number of paragraphs containing the word (one)
+		 * paragraphCount -> Number of paragraphs containing the word (one)
 		 * mean -> Number of occurrences of the word in the paragraph
 		 * variance -> Number of occurrences of the word in the paragraph squared (needed for variance)
 		 */
@@ -67,8 +62,9 @@ public class WordStatistics {
 				}
 			}
 
-			for (String word : freq.keySet()) {
+			int paragraph_length = 0;
 
+			for (String word : freq.keySet()) {
 				// count -> Number of paragraphs containing the word
 				// mean -> Number of occurrences of the word in the paragraph
 				// variance -> Number of occurrences of the word in the paragraph squared (needed for variance)
@@ -77,11 +73,19 @@ public class WordStatistics {
 				stats.setMean(freq.get(word));
 				stats.setVariance(Math.pow(freq.get(word), 2));
 
-				Text t = new Text();
-				t.set(word);
-				context.write(t, stats);
+				paragraph_length += freq.get(word);
 
+				context.write(new Text(word), stats);
 			}
+
+			// Set paragraph statistics
+			stats.setParagraphCount(1);
+			stats.setMean(paragraph_length);
+			stats.setVariance(paragraph_length * paragraph_length);
+
+			// Emit paragraph statistics (first char is ÷ so that is shows up at the end)
+			context.write(new Text("÷ParagraphStats"), stats);
+
 		}
 	}
 
@@ -115,7 +119,7 @@ public class WordStatistics {
 			stats.setMean(freq_sum);
 			stats.setVariance(freq_squared_sum);
 
-			// Emit the total count for the word.
+			// Emit the stats for the word.
 			context.write(key, stats);
 		}
 	}
@@ -177,7 +181,7 @@ public class WordStatistics {
 		job.setOutputFormatClass(TextOutputFormat.class);
 
 		// Grab the input file and output directory from the command line.
-		FileInputFormat.addInputPath(job, new Path(appArgs[0]));
+		FileInputFormat.addInputPaths(job, appArgs[0]);
 		FileOutputFormat.setOutputPath(job, new Path(appArgs[1]));
 
 		// Initiate the map-reduce job, and wait for completion.

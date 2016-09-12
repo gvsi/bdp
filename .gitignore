@@ -1,7 +1,8 @@
 .DS_Store
-*.class
+.class
 target/surefire-reports
 target/maven-status
 target/maven-archiver
 target/classes
 .idea
+.crc
