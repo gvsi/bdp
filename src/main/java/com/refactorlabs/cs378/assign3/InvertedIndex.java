@@ -4,7 +4,6 @@ package com.refactorlabs.cs378.assign3;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.ArrayWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -31,8 +30,7 @@ public class InvertedIndex extends Configured implements Tool {
 
 		/**
 		 * Local variable "word" will contain the word identified in the input.
-		 * The Hadoop Text object is mutable, so we can reuse the same object and
-		 * simply reset its value as each word in the input is encountered.
+		 * Any word will be emitted only once, through the use of a HashSet.
 		 */
 		private Text word = new Text();
 
@@ -73,8 +71,7 @@ public class InvertedIndex extends Configured implements Tool {
 	}
 
 	/**
-	 * The Reduce class for word count.  Extends class Reducer, provided by Hadoop.
-	 * This class defines the reduce() function for the word count example.
+	 * The Reduce class also used as a Combiner. It gets an array Verse location, sorts them and emits them.
 	 */
 	public static class ReduceClass extends Reducer<Text, VerseArrayWritable, Text, VerseArrayWritable> {
 
@@ -98,11 +95,6 @@ public class InvertedIndex extends Configured implements Tool {
 		}
 	}
 
-    /**
-     * The run method specifies the characteristics of the map-reduce job
-     * by setting values on the Job object, and then initiates the map-reduce
-     * job and waits for it to complete.
-     */
     public int run(String[] args) throws Exception {
 	Configuration conf = getConf();
 	String[] appArgs = new GenericOptionsParser(conf, args).getRemainingArgs();

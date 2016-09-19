@@ -20,6 +20,7 @@ public class VerseArrayWritable implements Writable {
         return verses;
     }
 
+    // Default constructor is required by Hadoop
     public VerseArrayWritable(){}
 
     public VerseArrayWritable(String[] verses) {
@@ -43,17 +44,11 @@ public class VerseArrayWritable implements Writable {
         }
     }
 
+    // Sorts the array with a custom comparator object
     public void sort() {
         Arrays.sort(verses, new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                if (!o1.matches("([A-Z][a-z]+:\\d+:\\d+)")) {
-                    System.out.println("YOOOO + " + o1);
-                }
-
-                if (!o2.matches("([A-Z][a-z]+:\\d+:\\d+)")) {
-                    System.out.println("YOOOO2 + " + o2);
-                }
                 String parts1[] = o1.split(":");
                 String parts2[] = o2.split(":");
 
