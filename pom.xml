@@ -7,7 +7,7 @@
     <groupId>com.refactorlabs.cs378</groupId>
     <artifactId>bdp</artifactId>
     <packaging>jar</packaging>
-    <version>0.3</version>
+    <version>0.4</version>
 
     <description>Java code for CS 378 - Big Data Programming</description>
 
@@ -16,6 +16,8 @@
         <!-- AWS designation: - - emr 5.0.0 -->
         <hadoop-common.version>2.7.2</hadoop-common.version>
         <hadoop-core.version>2.7.2</hadoop-core.version>
+        <!-- AVRO version -->
+        <avro.version>1.8.1</avro.version>
         <!-- guava collections version -->
         <guava.version>19.0</guava.version>
         <!-- mrunit version -->
@@ -38,6 +40,20 @@
             <version>${hadoop-core.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>${avro.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro-mapred</artifactId>
+            <version>${avro.version}</version>
+            <classifier>hadoop2</classifier>
+        </dependency>
+
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -101,10 +117,35 @@
                               <excludes>
                               </excludes>
                           </artifactSet>
+                          <transformers>
+                              <transformer implementation="org.apache.maven.plugins.shade.resource.ApacheLicenseResourceTransformer">
+                              </transformer>
+                          </transformers>
                       </configuration>
                   </execution>
               </executions>
           </plugin>
+
+          <plugin>
+              <groupId>org.apache.avro</groupId>
+              <artifactId>avro-maven-plugin</artifactId>
+              <version>${avro.version}</version>
+              <executions>
+                  <execution>
+                      <phase>generate-sources</phase>
+                      <goals>
+                          <goal>schema</goal>
+                      </goals>
+                      <configuration>
+                          <sourceDirectory>src/main/avro/</sourceDirectory>
+                          <outputDirectory>src/main/java/</outputDirectory>
+                          <testSourceDirectory>src/test/avro/</testSourceDirectory>
+                          <testOutputDirectory>src/test/java/</testOutputDirectory>
+                      </configuration>
+                  </execution>
+              </executions>
+          </plugin>
+
       </plugins>
     </build>
 
