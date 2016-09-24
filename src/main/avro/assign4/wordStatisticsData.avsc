@@ -1,0 +1,13 @@
+{"namespace": "com.refactorlabs.cs378.assign4",
+ "type": "record",
+ "name": "WordStatisticsData",
+ "fields": [
+     {"name": "docCount", "type": "long"},
+     {"name": "totalCount", "type": "long"},
+     {"name": "min", "type": "long"},
+     {"name": "max", "type": "long"},
+     {"name": "sumOfSquares", "type": "long"},
+     {"name": "mean", "type": "double", "default": 0.0},
+     {"name": "variance", "type": "double", "default": 0.0}
+ ]
+}
