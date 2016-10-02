@@ -1,0 +1,25 @@
+bodyStyle: Convertible	119
+bodyStyle: Coupe	236
+bodyStyle: Hatchback	99
+bodyStyle: Minivan	114
+bodyStyle: Pickup	501
+bodyStyle: SUV	959
+bodyStyle: Sedan	1335
+bodyStyle: Van	4
+bodyStyle: Wagon	55
+cabStyle: Crew Cab	309
+cabStyle: Extended Cab	129
+cabStyle: Regular Cab	63
+cabStyle: null	2921
+eventSubtype: alternative	946
+eventSubtype: badge detail	504
+eventSubtype: badges	599
+eventSubtype: contact button	4
+eventSubtype: contact form	113
+eventSubtype: features	420
+eventSubtype: get directions	2
+eventSubtype: market report	744
+eventSubtype: photo modal	67
+eventSubtype: vehicle history	23
+vehicleCondition: New	1
+vehicleCondition: Used	3421

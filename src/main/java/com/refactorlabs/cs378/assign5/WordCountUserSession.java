@@ -51,16 +51,30 @@ public class WordCountUserSession extends Configured implements Tool {
 		public void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
 			String line = value.toString();
-			StringTokenizer tokenizer = new StringTokenizer(line);
 
-			context.getCounter(MAPPER_COUNTER_GROUP, "Input Lines").increment(1L);
+			String[] fields = line.split("\\t");
 
-			// For each word in the input line, emit a count of 1 for that word.
-			while (tokenizer.hasMoreTokens()) {
-				word.set(tokenizer.nextToken());
-				context.write(word, ONE);
-				context.getCounter(MAPPER_COUNTER_GROUP, "Words Out").increment(1L);
-			}
+			// Event subtype
+			String eventType = fields[1];
+			String eventSubtype = eventType.substring(eventType.indexOf(' ') + 1, eventType.length());
+			word.set("eventSubtype: "+eventSubtype);
+			context.write(word, ONE);
+
+			// Body style
+			String bodyStyle = fields[12];
+			word.set("bodyStyle: "+bodyStyle);
+			context.write(word, ONE);
+
+			// Cab style
+			String cabStyle = fields[13];
+			if (cabStyle == "")
+			word.set("cabStyle: "+cabStyle);
+			context.write(word, ONE);
+
+			// Vehicle condition
+			String vehicleCondition= fields[7];
+			word.set("vehicleCondition: "+vehicleCondition);
+			context.write(word, ONE);
 		}
 	}
 
