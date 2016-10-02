@@ -9,56 +9,56 @@
                           "name": "Event",
                           "fields": [
                               {"name": "event_type",
-                               "type": {"type": "enum",
+                               "type": [{"type": "enum",
                                         "name": "EventType",
                                         "symbols": [ "CHANGE", "CLICK", "DISPLAY",
                                                      "EDIT", "SHOW", "VISIT" ]
-                                       }
+                                       }, "null"]
                                },
                               {"name": "event_subtype",
-                               "type": {"type": "enum",
-                                        "name": "EventSubtype",
-                                        "symbols": [ "ALTERNATIVE", "BADGE_DETAIL", "BADGES",
-                                                     "CONTACT_BUTTON", "CONTACT_FORM", "FEATURES",
-                                                     "GET_DIRECTIONS", "MARKET_REPORT", "PHOTO_MODAL",
-                                                     "VEHICLE_HISTORY" ]
-                                       }
+                               "type": [{"type": "enum",
+                                         "name": "EventSubtype",
+                                         "symbols": [ "ALTERNATIVE", "BADGE_DETAIL", "BADGES",
+                                                      "CONTACT_BUTTON", "CONTACT_FORM", "FEATURES",
+                                                      "GET_DIRECTIONS", "MARKET_REPORT", "PHOTO_MODAL",
+                                                      "VEHICLE_HISTORY" ]
+                                        }, "null"]
                               },
-                              {"name": "page", "type": "string" },
-                              {"name": "referring_domain", "type": "string" },
+                              {"name": "page", "type": ["string", "null"] },
+                              {"name": "referring_domain", "type": ["string", "null"] },
                               {"name": "event_time", "type": "string" },
-                              {"name": "city", "type": "string" },
-                              {"name": "vin", "type": "string" },
+                              {"name": "city", "type": ["string", "null"] },
+                              {"name": "vin", "type": ["string", "null"] },
                               {"name": "condition",
-                                       "type": {"type": "enum",
+                                       "type": [{"type": "enum",
                                                 "name": "VehicleCondition",
                                                 "symbols": [ "NEW", "USED"]
-                                               }
+                                               }, "null"]
                                        },
-                              {"name": "year", "type": "int" },
-                              {"name": "make", "type": "string" },
-                              {"name": "model", "type": "string" },
-                              {"name": "trim", "type": "string" },
+                              {"name": "year", "type": ["int", "null"] },
+                              {"name": "make", "type": ["string", "null"] },
+                              {"name": "model", "type": ["string", "null"] },
+                              {"name": "trim", "type": ["string", "null"] },
                               {"name": "body_style",
-                               "type": {"type": "enum",
+                               "type": [{"type": "enum",
                                         "name": "BodyStyle",
                                         "symbols": [ "CONVERTIBLE", "COUPLE", "HATCHBACK",
                                                      "MINIVAN", "PICKUP", "SUV",
                                                      "SEDAN", "VAN", "WAGON"]
-                                       }
+                                       }, "null"]
                                },
                                {"name": "cab_style",
-                                        "type": {"type": "enum",
+                                        "type": [{"type": "enum",
                                                  "name": "CabStyle",
                                                  "symbols": [ "CREW_CAB", "EXTENDED_CAB", "REGULAR_CAB" ]
-                                                }
+                                                }, "null"]
                                },
-                               {"name": "price", "type": "float" },
-                               {"name": "mileage", "type": "long" },
-                               {"name": "image_count", "type": "long" },
-                               {"name": "carfax_free_report", "type": "boolean" },
+                               {"name": "price", "type": ["float", "null"] },
+                               {"name": "mileage", "type": ["long", "null"] },
+                               {"name": "image_count", "type": ["long", "null"] },
+                               {"name": "carfax_free_report", "type": ["boolean", "null"] },
                                {"name": "features",
-                                "type": {"type": "array", "items": "string" }
+                                "type": [{"type": "array", "items": "string" }, "null"]
                                }
                             ]
                           }

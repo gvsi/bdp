@@ -19,32 +19,13 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 import java.io.IOException;
-import java.util.StringTokenizer;
 
 public class WordCountUserSession extends Configured implements Tool {
 
-	/**
-	 * Each count output from the map() function is "1", so to minimize small
-	 * object creation we can use a constant for this output value/object.
-	 */
 	public final static LongWritable ONE = new LongWritable(1L);
 
-	/**
-	 * The Map class for word count.  Extends class Mapper, provided by Hadoop.
-	 * This class defines the map() function for the word count example.
-	 */
 	public static class MapClass extends Mapper<LongWritable, Text, Text, LongWritable> {
 
-		/**
-		 * Counter group for the mapper.  Individual counters are grouped for the mapper.
-		 */
-		private static final String MAPPER_COUNTER_GROUP = "Mapper Counts";
-
-		/**
-		 * Local variable "word" will contain the word identified in the input.
-		 * The Hadoop Text object is mutable, so we can reuse the same object and
-		 * simply reset its value as each word in the input is encountered.
-		 */
 		private Text word = new Text();
 
 		@Override
@@ -54,46 +35,68 @@ public class WordCountUserSession extends Configured implements Tool {
 
 			String[] fields = line.split("\\t");
 
-			// Event subtype
-			String eventType = fields[1];
-			String eventSubtype = eventType.substring(eventType.indexOf(' ') + 1, eventType.length());
+
+            String fullType = fields[1];
+            int s = fullType.indexOf(' ');
+            String eventType = fullType.substring(0, s);
+            String eventSubtype = fullType.substring(s + 1, fullType.length());
+
+            // Event type
+            word.set("eventType:"+eventSubtype);
+            context.write(word, ONE);
+
+            // Event subtype
 			word.set("eventSubtype:"+eventSubtype);
 			context.write(word, ONE);
 
+            // Page
+            word.set("page:"+fields[2]);
+            context.write(word, ONE);
+
+            // City
+            word.set("city:"+fields[5]);
+            context.write(word, ONE);
+
+            // Vehicle condition
+            word.set("vehicleCondition:"+fields[7]);
+            context.write(word, ONE);
+
+            // Make
+            word.set("make:"+fields[9]);
+            context.write(word, ONE);
+
+            // Model
+            word.set("model:"+fields[10]);
+            context.write(word, ONE);
+
+            // Trim
+            word.set("trim:"+fields[11]);
+            context.write(word, ONE);
+
 			// Body style
-			String bodyStyle = fields[12];
-			word.set("bodyStyle:"+bodyStyle);
+			word.set("bodyStyle:"+fields[12]);
 			context.write(word, ONE);
 
 			// Cab style
-			String cabStyle = fields[13];
-			word.set("cabStyle:"+cabStyle);
+			word.set("cabStyle:"+fields[13]);
 			context.write(word, ONE);
 
-			// Vehicle condition
-			String vehicleCondition= fields[7];
-			word.set("vehicleCondition:"+vehicleCondition);
-			context.write(word, ONE);
+            // Carfax free report
+            word.set("carfaxFreeReport:"+fields[17]);
+            context.write(word, ONE);
+
+            // Features
+            word.set("features:"+fields[18]);
+            context.write(word, ONE);
 		}
 	}
 
-	/**
-	 * The Reduce class for word count.  Extends class Reducer, provided by Hadoop.
-	 * This class defines the reduce() function for the word count example.
-	 */
 	public static class ReduceClass extends Reducer<Text, LongWritable, Text, LongWritable> {
-
-		/**
-		 * Counter group for the reducer.  Individual counters are grouped for the reducer.
-		 */
-		private static final String REDUCER_COUNTER_GROUP = "Reducer Counts";
 
 		@Override
 		public void reduce(Text key, Iterable<LongWritable> values, Context context)
 				throws IOException, InterruptedException {
 			long sum = 0L;
-
-			context.getCounter(REDUCER_COUNTER_GROUP, "Words Out").increment(1L);
 
 			// Sum up the counts for the current word, specified in object "key".
 			for (LongWritable value : values) {

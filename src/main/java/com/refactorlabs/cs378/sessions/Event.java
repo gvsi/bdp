@@ -10,8 +10,8 @@ import org.apache.avro.specific.SpecificData;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Event extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 2206283772207712423L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Event\",\"namespace\":\"com.refactorlabs.cs378.sessions\",\"fields\":[{\"name\":\"event_type\",\"type\":{\"type\":\"enum\",\"name\":\"EventType\",\"symbols\":[\"CHANGE\",\"CLICK\",\"DISPLAY\",\"EDIT\",\"SHOW\",\"VISIT\"]}},{\"name\":\"event_subtype\",\"type\":{\"type\":\"enum\",\"name\":\"EventSubtype\",\"symbols\":[\"ALTERNATIVE\",\"BADGE_DETAIL\",\"BADGES\",\"CONTACT_BUTTON\",\"CONTACT_FORM\",\"FEATURES\",\"GET_DIRECTIONS\",\"MARKET_REPORT\",\"PHOTO_MODAL\",\"VEHICLE_HISTORY\"]}},{\"name\":\"page\",\"type\":\"string\"},{\"name\":\"referring_domain\",\"type\":\"string\"},{\"name\":\"event_time\",\"type\":\"string\"},{\"name\":\"city\",\"type\":\"string\"},{\"name\":\"vin\",\"type\":\"string\"},{\"name\":\"condition\",\"type\":{\"type\":\"enum\",\"name\":\"VehicleCondition\",\"symbols\":[\"NEW\",\"USED\"]}},{\"name\":\"year\",\"type\":\"int\"},{\"name\":\"make\",\"type\":\"string\"},{\"name\":\"model\",\"type\":\"string\"},{\"name\":\"trim\",\"type\":\"string\"},{\"name\":\"body_style\",\"type\":{\"type\":\"enum\",\"name\":\"BodyStyle\",\"symbols\":[\"CONVERTIBLE\",\"COUPLE\",\"HATCHBACK\",\"MINIVAN\",\"PICKUP\",\"SUV\",\"SEDAN\",\"VAN\",\"WAGON\"]}},{\"name\":\"cab_style\",\"type\":{\"type\":\"enum\",\"name\":\"CabStyle\",\"symbols\":[\"CREW_CAB\",\"EXTENDED_CAB\",\"REGULAR_CAB\"]}},{\"name\":\"price\",\"type\":\"float\"},{\"name\":\"mileage\",\"type\":\"long\"},{\"name\":\"image_count\",\"type\":\"long\"},{\"name\":\"carfax_free_report\",\"type\":\"boolean\"},{\"name\":\"features\",\"type\":{\"type\":\"array\",\"items\":\"string\"}}]}");
+  private static final long serialVersionUID = 6820144667171812511L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Event\",\"namespace\":\"com.refactorlabs.cs378.sessions\",\"fields\":[{\"name\":\"event_type\",\"type\":[{\"type\":\"enum\",\"name\":\"EventType\",\"symbols\":[\"CHANGE\",\"CLICK\",\"DISPLAY\",\"EDIT\",\"SHOW\",\"VISIT\"]},\"null\"]},{\"name\":\"event_subtype\",\"type\":[{\"type\":\"enum\",\"name\":\"EventSubtype\",\"symbols\":[\"ALTERNATIVE\",\"BADGE_DETAIL\",\"BADGES\",\"CONTACT_BUTTON\",\"CONTACT_FORM\",\"FEATURES\",\"GET_DIRECTIONS\",\"MARKET_REPORT\",\"PHOTO_MODAL\",\"VEHICLE_HISTORY\"]},\"null\"]},{\"name\":\"page\",\"type\":[\"string\",\"null\"]},{\"name\":\"referring_domain\",\"type\":[\"string\",\"null\"]},{\"name\":\"event_time\",\"type\":\"string\"},{\"name\":\"city\",\"type\":[\"string\",\"null\"]},{\"name\":\"vin\",\"type\":[\"string\",\"null\"]},{\"name\":\"condition\",\"type\":[{\"type\":\"enum\",\"name\":\"VehicleCondition\",\"symbols\":[\"NEW\",\"USED\"]},\"null\"]},{\"name\":\"year\",\"type\":[\"int\",\"null\"]},{\"name\":\"make\",\"type\":[\"string\",\"null\"]},{\"name\":\"model\",\"type\":[\"string\",\"null\"]},{\"name\":\"trim\",\"type\":[\"string\",\"null\"]},{\"name\":\"body_style\",\"type\":[{\"type\":\"enum\",\"name\":\"BodyStyle\",\"symbols\":[\"CONVERTIBLE\",\"COUPLE\",\"HATCHBACK\",\"MINIVAN\",\"PICKUP\",\"SUV\",\"SEDAN\",\"VAN\",\"WAGON\"]},\"null\"]},{\"name\":\"cab_style\",\"type\":[{\"type\":\"enum\",\"name\":\"CabStyle\",\"symbols\":[\"CREW_CAB\",\"EXTENDED_CAB\",\"REGULAR_CAB\"]},\"null\"]},{\"name\":\"price\",\"type\":[\"float\",\"null\"]},{\"name\":\"mileage\",\"type\":[\"long\",\"null\"]},{\"name\":\"image_count\",\"type\":[\"long\",\"null\"]},{\"name\":\"carfax_free_report\",\"type\":[\"boolean\",\"null\"]},{\"name\":\"features\",\"type\":[{\"type\":\"array\",\"items\":\"string\"},\"null\"]}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
   @Deprecated public com.refactorlabs.cs378.sessions.EventType event_type;
   @Deprecated public com.refactorlabs.cs378.sessions.EventSubtype event_subtype;
@@ -21,16 +21,16 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
   @Deprecated public java.lang.CharSequence city;
   @Deprecated public java.lang.CharSequence vin;
   @Deprecated public com.refactorlabs.cs378.sessions.VehicleCondition condition;
-  @Deprecated public int year;
+  @Deprecated public java.lang.Integer year;
   @Deprecated public java.lang.CharSequence make;
   @Deprecated public java.lang.CharSequence model;
   @Deprecated public java.lang.CharSequence trim;
   @Deprecated public com.refactorlabs.cs378.sessions.BodyStyle body_style;
   @Deprecated public com.refactorlabs.cs378.sessions.CabStyle cab_style;
-  @Deprecated public float price;
-  @Deprecated public long mileage;
-  @Deprecated public long image_count;
-  @Deprecated public boolean carfax_free_report;
+  @Deprecated public java.lang.Float price;
+  @Deprecated public java.lang.Long mileage;
+  @Deprecated public java.lang.Long image_count;
+  @Deprecated public java.lang.Boolean carfax_free_report;
   @Deprecated public java.util.List<java.lang.CharSequence> features;
 
   /**
@@ -482,16 +482,16 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
     private java.lang.CharSequence city;
     private java.lang.CharSequence vin;
     private com.refactorlabs.cs378.sessions.VehicleCondition condition;
-    private int year;
+    private java.lang.Integer year;
     private java.lang.CharSequence make;
     private java.lang.CharSequence model;
     private java.lang.CharSequence trim;
     private com.refactorlabs.cs378.sessions.BodyStyle body_style;
     private com.refactorlabs.cs378.sessions.CabStyle cab_style;
-    private float price;
-    private long mileage;
-    private long image_count;
-    private boolean carfax_free_report;
+    private java.lang.Float price;
+    private java.lang.Long mileage;
+    private java.lang.Long image_count;
+    private java.lang.Boolean carfax_free_report;
     private java.util.List<java.lang.CharSequence> features;
 
     /** Creates a new Builder */
@@ -992,7 +992,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'year'.
       * @return This builder.
       */
-    public com.refactorlabs.cs378.sessions.Event.Builder setYear(int value) {
+    public com.refactorlabs.cs378.sessions.Event.Builder setYear(java.lang.Integer value) {
       validate(fields()[8], value);
       this.year = value;
       fieldSetFlags()[8] = true;
@@ -1013,6 +1013,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * @return This builder.
       */
     public com.refactorlabs.cs378.sessions.Event.Builder clearYear() {
+      year = null;
       fieldSetFlags()[8] = false;
       return this;
     }
@@ -1225,7 +1226,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'price'.
       * @return This builder.
       */
-    public com.refactorlabs.cs378.sessions.Event.Builder setPrice(float value) {
+    public com.refactorlabs.cs378.sessions.Event.Builder setPrice(java.lang.Float value) {
       validate(fields()[14], value);
       this.price = value;
       fieldSetFlags()[14] = true;
@@ -1246,6 +1247,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * @return This builder.
       */
     public com.refactorlabs.cs378.sessions.Event.Builder clearPrice() {
+      price = null;
       fieldSetFlags()[14] = false;
       return this;
     }
@@ -1263,7 +1265,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'mileage'.
       * @return This builder.
       */
-    public com.refactorlabs.cs378.sessions.Event.Builder setMileage(long value) {
+    public com.refactorlabs.cs378.sessions.Event.Builder setMileage(java.lang.Long value) {
       validate(fields()[15], value);
       this.mileage = value;
       fieldSetFlags()[15] = true;
@@ -1284,6 +1286,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * @return This builder.
       */
     public com.refactorlabs.cs378.sessions.Event.Builder clearMileage() {
+      mileage = null;
       fieldSetFlags()[15] = false;
       return this;
     }
@@ -1301,7 +1304,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'image_count'.
       * @return This builder.
       */
-    public com.refactorlabs.cs378.sessions.Event.Builder setImageCount(long value) {
+    public com.refactorlabs.cs378.sessions.Event.Builder setImageCount(java.lang.Long value) {
       validate(fields()[16], value);
       this.image_count = value;
       fieldSetFlags()[16] = true;
@@ -1322,6 +1325,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * @return This builder.
       */
     public com.refactorlabs.cs378.sessions.Event.Builder clearImageCount() {
+      image_count = null;
       fieldSetFlags()[16] = false;
       return this;
     }
@@ -1339,7 +1343,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'carfax_free_report'.
       * @return This builder.
       */
-    public com.refactorlabs.cs378.sessions.Event.Builder setCarfaxFreeReport(boolean value) {
+    public com.refactorlabs.cs378.sessions.Event.Builder setCarfaxFreeReport(java.lang.Boolean value) {
       validate(fields()[17], value);
       this.carfax_free_report = value;
       fieldSetFlags()[17] = true;
@@ -1360,6 +1364,7 @@ public class Event extends org.apache.avro.specific.SpecificRecordBase implement
       * @return This builder.
       */
     public com.refactorlabs.cs378.sessions.Event.Builder clearCarfaxFreeReport() {
+      carfax_free_report = null;
       fieldSetFlags()[17] = false;
       return this;
     }
