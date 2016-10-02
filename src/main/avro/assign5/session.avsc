@@ -1,0 +1,30 @@
+{"namespace": "com.refactorlabs.cs378.sessions",
+ "type": "record",
+ "name": "Session",
+ "fields": [
+      {"name": "user_id", "type": "string"},
+      {"name": "events",
+       "type": {"type": "array",
+                "items": {"type": "record",
+                          "name": "Event",
+                          "fields": [
+                              {"name": "event_type",
+                               "type": {"type": "enum",
+                                        "name": "EventType",
+                                        "symbols": [ "CHANGE", "CLICK", "DISPLAY",
+                                                     "EDIT", "SHOW", "VISIT" ]
+                                       }
+                               },
+                              {"name": "event_subtype",
+                               "type": {"type": "enum", "name": "EventSubtype",
+                                        "symbols": [ enumerate the subType symbols here ]
+                                       }
+                              },
+                              {"name": "event_time", "type": "string" }
+                            ]
+                          }
+                }
+       }
+   ]
+ }
+
