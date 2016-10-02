@@ -244,7 +244,13 @@ public class UserSessions extends Configured implements Tool {
             eventBuilder.setCarfaxFreeReport(carfax_free_report);
 
             // Set features
-            eventBuilder.setFeatures(Arrays.asList(fields[18].split(":")));
+            CharSequence[] features = fields[18].split(":");
+            if (!features[0].equals("null")) {
+                Arrays.sort(features);
+                eventBuilder.setFeatures(Arrays.asList(features));
+            } else {
+                eventBuilder.setFeatures(null);
+            }
 
 
             AvroValue<Event> event = new AvroValue<Event>(eventBuilder.build());
