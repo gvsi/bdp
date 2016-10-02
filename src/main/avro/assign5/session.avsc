@@ -16,15 +16,53 @@
                                        }
                                },
                               {"name": "event_subtype",
-                               "type": {"type": "enum", "name": "EventSubtype",
-                                        "symbols": [ enumerate the subType symbols here ]
+                               "type": {"type": "enum",
+                                        "name": "EventSubtype",
+                                        "symbols": [ "ALTERNATIVE", "BADGE_DETAIL", "BADGES",
+                                                     "CONTACT_BUTTON", "CONTACT_FORM", "FEATURES",
+                                                     "GET_DIRECTIONS", "MARKET_REPORT", "PHOTO_MODAL",
+                                                     "VEHICLE_HISTORY" ]
                                        }
                               },
-                              {"name": "event_time", "type": "string" }
+                              {"name": "page", "type": "string" },
+                              {"name": "referring_domain", "type": "string" },
+                              {"name": "event_time", "type": "string" },
+                              {"name": "city", "type": "string" },
+                              {"name": "vin", "type": "string" },
+                              {"name": "condition",
+                                       "type": {"type": "enum",
+                                                "name": "VehicleCondition",
+                                                "symbols": [ "NEW", "USED"]
+                                               }
+                                       },
+                              {"name": "year", "type": "int" },
+                              {"name": "make", "type": "string" },
+                              {"name": "model", "type": "string" },
+                              {"name": "trim", "type": "string" },
+                              {"name": "body_style",
+                               "type": {"type": "enum",
+                                        "name": "BodyStyle",
+                                        "symbols": [ "CONVERTIBLE", "COUPLE", "HATCHBACK",
+                                                     "MINIVAN", "PICKUP", "SUV",
+                                                     "SEDAN", "VAN", "WAGON"]
+                                       }
+                               },
+                               {"name": "cab_style",
+                                        "type": {"type": "enum",
+                                                 "name": "CabStyle",
+                                                 "symbols": [ "CREW_CAB", "EXTENDED_CAB", "REGULAR_CAB" ]
+                                                }
+                               },
+                               {"name": "price", "type": "float" },
+                               {"name": "mileage", "type": "long" },
+                               {"name": "image_count", "type": "long" },
+                               {"name": "carfax_free_report", "type": "boolean" },
+                               {"name": "features",
+                                "type": {"type": "array", "items": "string" }
+                               }
                             ]
                           }
                 }
        }
    ]
  }
-
