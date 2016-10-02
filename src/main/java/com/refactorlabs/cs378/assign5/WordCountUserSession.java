@@ -57,23 +57,22 @@ public class WordCountUserSession extends Configured implements Tool {
 			// Event subtype
 			String eventType = fields[1];
 			String eventSubtype = eventType.substring(eventType.indexOf(' ') + 1, eventType.length());
-			word.set("eventSubtype: "+eventSubtype);
+			word.set("eventSubtype:"+eventSubtype);
 			context.write(word, ONE);
 
 			// Body style
 			String bodyStyle = fields[12];
-			word.set("bodyStyle: "+bodyStyle);
+			word.set("bodyStyle:"+bodyStyle);
 			context.write(word, ONE);
 
 			// Cab style
 			String cabStyle = fields[13];
-			if (cabStyle == "")
-			word.set("cabStyle: "+cabStyle);
+			word.set("cabStyle:"+cabStyle);
 			context.write(word, ONE);
 
 			// Vehicle condition
 			String vehicleCondition= fields[7];
-			word.set("vehicleCondition: "+vehicleCondition);
+			word.set("vehicleCondition:"+vehicleCondition);
 			context.write(word, ONE);
 		}
 	}
