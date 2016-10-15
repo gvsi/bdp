@@ -155,6 +155,9 @@ public class ModifiedUserSessions extends Configured implements Tool {
                 case "Used":
                     vehicleCondition = VehicleCondition.USED;
                     break;
+                case "CPO":
+                    vehicleCondition = VehicleCondition.CPO;
+                    break;
                 default:
                     vehicleCondition = null;
                     break;
@@ -198,6 +201,9 @@ public class ModifiedUserSessions extends Configured implements Tool {
                     break;
                 case "Wagon":
                     bodyStyle = BodyStyle.WAGON;
+                    break;
+                case "Chassis":
+                    bodyStyle = BodyStyle.CHASSIS;
                     break;
                 default:
                     bodyStyle = null;
