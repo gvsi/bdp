@@ -32,7 +32,7 @@
                               {"name": "condition",
                                        "type": [{"type": "enum",
                                                 "name": "VehicleCondition",
-                                                "symbols": [ "NEW", "USED"]
+                                                "symbols": [ "NEW", "USED", "CPO"]
                                                }, "null"]
                                        },
                               {"name": "year", "type": ["int", "null"] },
@@ -44,7 +44,7 @@
                                         "name": "BodyStyle",
                                         "symbols": [ "CONVERTIBLE", "COUPLE", "HATCHBACK",
                                                      "MINIVAN", "PICKUP", "SUV",
-                                                     "SEDAN", "VAN", "WAGON"]
+                                                     "SEDAN", "VAN", "WAGON", "CHASSIS"]
                                        }, "null"]
                                },
                                {"name": "cab_style",
